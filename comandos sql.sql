@@ -117,5 +117,27 @@ insert into cliente(nome, email, senha, cpf) values
     
     select * from produto order by preco desc limit 10;
     
+    select * from produto where preco = ( select max(preco) from produto);
     
+	select * from produto where preco = (select min(preco) from produto);
+    
+    select * from produto inner join departamento 
+		on departamento.codigo = produto.departamento_codigo;
+        
+	select departamento.nome, count(produto.codigo) 
+		from produto right outer join departamento
+        on produto.departamento_codigo = departamento.codigo
+        group by departamento.codigo;
+        
+	/*exercicio 7 estou em duvida ainda - tabela inserindo todos os clientes */
+    select pedido.numero, pedido.data_pedido, pedido.valor_bruto,
+		pedido.desconto, pedido.valor_final, cliente.nome, produto.nome 
+        from pedido	inner join item_pedido
+		on	pedido.numero = item_pedido.pedido_numero
+		inner join produto on produto.codigo = item_pedido.produto_codigo
+		inner join cliente on pedido.cliente_id = cliente_id
+        order by pedido.numero;
+        
+	/*preciso consertar a data para terminar esse exercício */
+    select count(numero) from pedido group by month(now());
     
